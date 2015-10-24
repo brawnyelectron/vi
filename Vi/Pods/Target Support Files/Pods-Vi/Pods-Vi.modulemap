@@ -1,0 +1,6 @@
+framework module Pods_Vi {
+  umbrella header "Pods-Vi-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -28,6 +28,8 @@ class HomeViewController: UIViewController, SpeechKitDelegate, SKRecognizerDeleg
     super.didReceiveMemoryWarning()
   }
   
+  
+  /* UI Setup */
   func createMicButtonPressFunctionality() {
     self.MicButton.addTarget(self, action: "startListening", forControlEvents: .TouchUpInside)
   }
@@ -59,7 +61,6 @@ class HomeViewController: UIViewController, SpeechKitDelegate, SKRecognizerDeleg
     MicButton.layer.mask = circleShape
   }
   
-  /* Swipe gesture */
   func addUpSwipeGesture() {
     let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
     upSwipe.direction = .Up
@@ -71,6 +72,25 @@ class HomeViewController: UIViewController, SpeechKitDelegate, SKRecognizerDeleg
       NSLog("Swipe Up")
       startListening()
     }
+  }
+  
+  /* Server & API */
+  func attemptToExecuteOnTranscript(transcript: String) {
+    let apiCallManager = AFHTTPRequestOperationManager()
+    
+    apiCallManager.GET(
+      "http://viapi.io/",
+      parameters: nil,
+      success: { (operation: AFHTTPRequestOperation!,
+        responseObject: AnyObject!) in
+        NSLog("JSON: %@", responseObject.description)
+      },
+      failure: { (operation: AFHTTPRequestOperation!,
+        error: NSError!) in
+        NSLog("Error: %@", error.localizedDescription)
+      }
+    )
+    
   }
 
   /*** Nuance ***/
